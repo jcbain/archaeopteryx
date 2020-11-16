@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from './theme/GlobalStyle'
 import { lightTheme } from './theme/themes'
+import Logo from './components/Logo';
 import Grabbers from './components/Grabbers';
 
 
@@ -29,6 +30,7 @@ function App() {
           <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" /> 
         </Helmet>
         <GlobalStyle />
+        <Logo />
         <Grabbers data={data}/>
       </div>
     </ThemeProvider>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -23,8 +23,31 @@ const Button = styled.button`
         0% 10%) */
 `
 
+const AvatarImg = styled.img`
+    height: 25%;
+`
+
+
+
 const GrabberButton = props => {
-    const { identifier, name } = props;
+    const { identifier, name, imgNums } = props;
+    const spriteName = name.toLowerCase()
+    const [ hover, setHover ] = useState(false);
+    const [ imgIndex, setImgIndex ] = useState(1)
+
+    useEffect(() => {
+        if(hover){
+            const timer = setTimeout(() => {
+                if(imgIndex < imgNums){
+                    setImgIndex(prev => prev + 1) 
+                } else {
+                    setImgIndex(1)
+                }
+            }, 100)
+            return () => clearTimeout(timer);
+        }
+
+    })
 
     const handleClick = e => {
         e.preventDefault();
@@ -35,7 +58,12 @@ const GrabberButton = props => {
 
 
     return (
-        <Button onClick={handleClick}>{name}</Button>
+        <>
+            <AvatarImg src={`/assets/sprites/${spriteName}0${imgIndex}.png`} 
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}/>
+            {/* <Button onClick={handleClick}>{name}</Button> */}
+        </>
     )
 
 }
