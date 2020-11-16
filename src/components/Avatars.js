@@ -4,19 +4,12 @@ import styled from 'styled-components';
 import Avatar from './Avatar';
 
 const GrabberContainer = styled.div`
-    width: 90%;
-    height: 80vh;
-    padding: 5%;
+    /* height: 10vh; */
+    padding: 1%;
 `
 
 const Avatars = props => {
-    const { data } = props;
-
-    const textIds = [
-        {id: 1, name: 'Obama', imgNums: 3},
-        {id: 2, name: 'Trump', imgNums: 3},
-        {id: 3, name: 'Harris', imgNums: 2}
-    ]
+    const  { data, textIds } = props;
 
     const collectionButtons = data.map( d => {
         const text = textIds.find( t => t.id === d.id );
@@ -28,7 +21,7 @@ const Avatars = props => {
 
     return (
         <GrabberContainer>
-            {collectionButtons}
+            { collectionButtons }
         </GrabberContainer>
     )
 }

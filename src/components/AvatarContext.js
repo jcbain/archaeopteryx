@@ -1,23 +1,24 @@
 import Axios from 'axios';
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+
+import useJobData from '../hooks/useJobData';
 
 const AvatarContext = createContext();
 
 const AvatarProvider = props => {
     const { children } = props;
-    const [ data, setData ] = useState([])
+    const { loaded, data } = useJobData();
+    const [ selectedAvatar, setSelectedAvatar ] = useState();
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/')
-        .then(res => setData(res.data))
-        .catch(err => console.log(err))
-    }, [])
-
+    const chooseAvatar = (id) => {
+        const chosen = data.find(d => d.id === id)
+        setSelectedAvatar(chosen)
+    }
 
     return (
         <AvatarContext.Provider value={{
-            jobData: data
+            dataState: { loaded, data },
+            avatarState: { selectedAvatar, chooseAvatar }
         }}>
             { children }
         </AvatarContext.Provider>

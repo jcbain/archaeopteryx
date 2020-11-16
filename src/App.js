@@ -1,23 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from './theme/GlobalStyle';
 import { lightTheme } from './theme/themes';
-import useJobData from './hooks/useJobData';
-// import { AvatarProvider } from './components/AvatarContext';
+import { AvatarProvider } from './components/AvatarContext';
 import Logo from './components/Logo';
-import Avatars from './components/Avatars';
+import AvatarContent from './components/AvatarContent';
 
 
 function App() {
-  const { loaded, data } = useJobData();
-
 
   return (
     <ThemeProvider theme={lightTheme}>
-      {/* <AvatarProvider> */}
+      <AvatarProvider>
         <div className="App">
           <Helmet>
             <meta charSet="utf-8" />
@@ -27,9 +23,9 @@ function App() {
           </Helmet>
           <GlobalStyle />
           <Logo />
-          {loaded && <Avatars data={data}/>}
+          <AvatarContent />
         </div>
-      {/* </AvatarProvider> */}
+      </AvatarProvider>
     </ThemeProvider>
   );
 }

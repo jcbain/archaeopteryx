@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import useAvatarHover from '../hooks/useAvatarHover'
+import useAvatarHover from '../hooks/useAvatarHover';
+import { AvatarContext } from './AvatarContext';
 
 const Button = styled.button`
     color: white;
@@ -26,7 +27,7 @@ const Button = styled.button`
 `
 
 const AvatarImg = styled.img`
-    height: 25%;
+    height: 100%;
 `
 
 
@@ -35,6 +36,8 @@ const Avatar = props => {
     const { identifier, name, imgNums } = props;
     const spriteName = name.toLowerCase()
     const { setHover, imgIndex } = useAvatarHover(imgNums);
+    const { avatarState } = useContext(AvatarContext);
+    const { chooseAvatar } = avatarState;
 
 
     const handleClick = e => {
@@ -49,7 +52,9 @@ const Avatar = props => {
         <>
             <AvatarImg src={`/assets/sprites/${spriteName}0${imgIndex}.png`} 
                 onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}/>
+                onMouseLeave={() => setHover(false)}
+                onClick={() => chooseAvatar(identifier)}
+                />
             {/* <Button onClick={handleClick}>{name}</Button> */}
         </>
     )
