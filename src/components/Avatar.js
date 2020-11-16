@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+
+import useAvatarHover from '../hooks/useAvatarHover'
 
 const Button = styled.button`
     color: white;
@@ -29,25 +31,11 @@ const AvatarImg = styled.img`
 
 
 
-const GrabberButton = props => {
+const Avatar = props => {
     const { identifier, name, imgNums } = props;
     const spriteName = name.toLowerCase()
-    const [ hover, setHover ] = useState(false);
-    const [ imgIndex, setImgIndex ] = useState(1)
+    const { setHover, imgIndex } = useAvatarHover(imgNums);
 
-    useEffect(() => {
-        if(hover){
-            const timer = setTimeout(() => {
-                if(imgIndex < imgNums){
-                    setImgIndex(prev => prev + 1) 
-                } else {
-                    setImgIndex(1)
-                }
-            }, 100)
-            return () => clearTimeout(timer);
-        }
-
-    })
 
     const handleClick = e => {
         e.preventDefault();
@@ -68,5 +56,5 @@ const GrabberButton = props => {
 
 }
 
-export default GrabberButton;
+export default Avatar;
 

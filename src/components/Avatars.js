@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import GrabberButton from './GrabberButton';
+import Avatar from './Avatar';
 
 const GrabberContainer = styled.div`
     width: 90%;
@@ -9,7 +9,7 @@ const GrabberContainer = styled.div`
     padding: 5%;
 `
 
-const Grabbers = props => {
+const Avatars = props => {
     const { data } = props;
 
     const textIds = [
@@ -22,7 +22,7 @@ const Grabbers = props => {
         const text = textIds.find( t => t.id === d.id );
         const name = text.name
         return (
-            <GrabberButton key={d.id} identifier={d.id} name={name} imgNums={text.imgNums} />
+            <Avatar key={d.id} identifier={d.id} name={name} imgNums={text.imgNums} />
         )
     })
 
@@ -33,4 +33,4 @@ const Grabbers = props => {
     )
 }
 
-export default Grabbers;
+export default Avatars;
