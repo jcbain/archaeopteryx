@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Helmet } from 'react-helmet';
+import { ThemeProvider } from 'styled-components';
+
+import GlobalStyle from './theme/GlobalStyle'
+import { lightTheme } from './theme/themes'
+import Grabbers from './components/Grabbers';
+
 
 function App() {
+  const [ data, setData ] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/')
+      .then(res => setData(res.data))
+      .catch(err => err)
+  }, [])
+
+  console.log(data)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={lightTheme} >
+      <div className="App">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>archaeopteryx</title>
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet" /> 
+        </Helmet>
+        <GlobalStyle />
+        <Grabbers data={data}/>
+      </div>
+    </ThemeProvider>
   );
 }
 
