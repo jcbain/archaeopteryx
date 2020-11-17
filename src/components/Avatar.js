@@ -27,7 +27,7 @@ const Button = styled.button`
 `
 
 const AvatarImg = styled.img`
-    height: 100%;
+    height: 33%;
 `
 
 
@@ -40,12 +40,12 @@ const Avatar = props => {
     const { chooseAvatar } = avatarState;
 
 
-    const handleClick = e => {
-        e.preventDefault();
-        axios.post(`/${identifier}`, { name: name})
-            .then(resp => console.log(resp))
-            .catch(err => console.log(err))
-    }
+    // const handleClick = e => {
+    //     e.preventDefault();
+    //     axios.post(`/${identifier}`, { name: name})
+    //         .then(resp => console.log(resp))
+    //         .catch(err => console.log(err))
+    // }
 
 
     return (
@@ -55,7 +55,6 @@ const Avatar = props => {
                 onMouseLeave={() => setHover(false)}
                 onClick={() => chooseAvatar(identifier)}
                 />
-            {/* <Button onClick={handleClick}>{name}</Button> */}
         </>
     )
 

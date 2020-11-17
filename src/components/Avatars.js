@@ -6,6 +6,7 @@ import Avatar from './Avatar';
 const GrabberContainer = styled.div`
     /* height: 10vh; */
     padding: 1%;
+    height: 100%;
 `
 
 const Avatars = props => {
