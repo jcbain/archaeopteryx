@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Tweet } from 'react-twitter-widgets'
 
 import useAvatarHover from '../hooks/useAvatarHover';
 
+const ContainerDiv = styled.div`
+    display: grid;
+    grid-template-rows: 1fr .5fr;
+    grid-template-columns: 0.5fr 1fr;
+    grid-template-areas:
+        "avatar tweet"
+        "avatar button";
+    align-items: center;
+`
+
 const AvatarImg = styled.img`
+    grid-area: avatar;
     height: 100%;
     /* height:  40%; */
 `;
 
 const CollectButton = styled.button`
+    grid-area: button;
     background: ${ props => props.theme.primaryBlue };
     color: ${props => props.theme.primaryWhite};
     font-family: 'Archivo Black', sans-serif;
@@ -18,6 +31,8 @@ const CollectButton = styled.button`
     font-size: 1.5em;
     padding: 10px;
     outline: none;
+    width: 50%;
+    height: 50px;
 `
 
 const ChosenAvatar = props => {
@@ -35,19 +50,18 @@ const ChosenAvatar = props => {
             .catch(err => console.log(err))
     }
 
-
     return (
-        <div>
+        <ContainerDiv>
             <AvatarImg src={`/assets/sprites/${name}0${imgIndex}.png`}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
              />
-             <div>
-                 {recentTweet && <p>{recentTweet.text}</p>}
+             <div style={{width: "50%"}}>
+                 {recentTweet && <Tweet tweetId={recentTweet.id} />}
              </div>
              <CollectButton onClick={handleClick}>get those tweets</CollectButton>
 
-        </div>
+        </ContainerDiv>
     )
 }
 
