@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { Tweet } from 'react-twitter-widgets'
 
 import useAvatarHover from '../hooks/useAvatarHover';
+import Tweets from './Tweets';
 
 const ContainerDiv = styled.div`
     display: grid;
@@ -41,13 +41,44 @@ const ChosenAvatar = props => {
     const metaData = textIds.find(d => d.id === id);
     const name = metaData.name.toLowerCase()
     const { setHover, imgIndex } = useAvatarHover(metaData.imgNums);
-    const [ recentTweet, setRecentTweet ] = useState(null)
+    const [ recentTweets, setRecentTweets ] = useState([])
+    const [ tweetIndex, setTweetIndex ] = useState(0)
+    const [ tweetLength, setTweetLength ] = useState(0)
 
     const handleClick = e => {
         e.preventDefault();
         axios.post(`/${id}`, {query: query, jobId: id})
-            .then(resp => setRecentTweet(resp.data))
+            .then(resp => console.log(resp))
             .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        axios.get(`/${id}`)
+            .then(resp => {
+                setRecentTweets(resp.data)
+                setTweetLength(resp.data.length)
+            })
+            .catch(err => console.log(err))
+    }, [id])
+
+    const next = () => {
+        setTweetIndex(prev => {
+            if (prev < tweetLength) {
+                return prev + 1;
+            } else {
+                return 0
+            }
+        })
+    }
+
+    const previous = () => {
+        setTweetIndex(prev => {
+            if(prev < 0){
+                return prev - 1;
+            } else {
+                return tweetLength - 1;
+            }
+        })
     }
 
     return (
@@ -56,9 +87,7 @@ const ChosenAvatar = props => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
              />
-             <div style={{width: "50%"}}>
-                 {recentTweet && <Tweet tweetId={recentTweet.id} />}
-             </div>
+             { recentTweets.length > 0 && <Tweets data={recentTweets} selectedTweetIndex={tweetIndex} next={next} previous={previous}/> }
              <CollectButton onClick={handleClick}>get those tweets</CollectButton>
 
         </ContainerDiv>
