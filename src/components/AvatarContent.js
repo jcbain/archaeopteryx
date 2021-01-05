@@ -23,7 +23,6 @@ const AvatarContent = (props) => {
         {id: 3, name: 'Harris', imgNums: 2}
     ]
 
-
     return (
         <ContentDiv>
             {loaded && <Avatars data={data} textIds={textIds}/>}

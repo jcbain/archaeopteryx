@@ -6,12 +6,12 @@ const LogoDiv = styled.div`
     color: ${({theme}) => theme.primaryWhite};
     font-family: 'Fredoka One', cursive;
     font-size: 2em;
-    width: 8%;
+    width: 100px;
     padding: 0.5em;
     border-radius: 4px;
 `;
 
-const Logo = props => {
+const Logo = () => {
 
     return (
         <LogoDiv>
