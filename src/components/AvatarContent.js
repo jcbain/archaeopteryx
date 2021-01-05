@@ -15,7 +15,7 @@ const ContentDiv = styled.div`
 const AvatarContent = (props) => {
     const { dataState, avatarState } = useContext(AvatarContext);
     const { loaded, data } = dataState;
-    const { selectedAvatar } = avatarState;
+    const { selectedAvatar, requestQuery, setRequestQuery  } = avatarState;
 
     const textIds = [
         {id: 1, name: 'Obama', imgNums: 3},
@@ -26,7 +26,7 @@ const AvatarContent = (props) => {
     return (
         <ContentDiv>
             {loaded && <Avatars data={data} textIds={textIds}/>}
-            {selectedAvatar && <ChosenAvatar selectedAvatar={selectedAvatar} textIds={textIds}/>}
+            {selectedAvatar && <ChosenAvatar selectedAvatar={selectedAvatar} textIds={textIds} requestQuery={requestQuery} setRequestQuery={setRequestQuery} />}
         </ContentDiv>
     )
 }

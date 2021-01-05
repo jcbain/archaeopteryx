@@ -29,7 +29,6 @@ const ModalDiv = styled.div`
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
     background: ${({ theme }) => theme.primaryBlue};
-
 `
 
 const CollectButton = styled.button`
@@ -50,10 +49,20 @@ const TimeCollectionDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
     font-family: 'Fredoka One', cursive;
     color: ${({ theme }) => theme.primaryTan};
     font-size: 1em;
+    margin-bottom: 20px;
+`
+
+const SelectionDiv = styled.div`
+    width: 100%;
+    font-family: 'Fredoka One', cursive;
+    color: ${({ theme }) => theme.primaryTan};
+    font-size: 1em;
+    margin-bottom: 20px;
 `
 
 const StyledPlus = styled(Plus)`
@@ -78,19 +87,13 @@ const StyledInput = styled.input`
 
 `
 
-const SpecialStuff = styled.div`
-`
-
 
 const ChosenAvatar = props => {
-    const { selectedAvatar, textIds } = props;
+    const { selectedAvatar, textIds, requestQuery, setRequestQuery } = props;
     const { id, query } = selectedAvatar;
     const metaData = textIds.find(d => d.id === id);
     const name = metaData.name.toLowerCase()
     const { setHover, imgIndex } = useAvatarHover(metaData.imgNums);
-    const [ recentTweets, setRecentTweets ] = useState([])
-    const [ tweetIndex, setTweetIndex ] = useState(0)
-    const [ tweetLength, setTweetLength ] = useState(0)
     const [ hours, setHours ] = useState(1);
 
     const incrementHours = () => {
@@ -110,9 +113,15 @@ const ChosenAvatar = props => {
         e.preventDefault();
     }
 
+    const handleQueryChange = e => {
+        setRequestQuery(e.target.value)
+        e.preventDefault();
+    }
+
     const runCollection = e => {
         e.preventDefault();
-        axios.post(`/${id}`, {hours: hours, query: query})
+        const reqQuery = `from:${requestQuery}`;
+        axios.post(`/${id}`, {hours: hours, query: reqQuery})
             .then(resp => 'sent')
     }
 
@@ -123,6 +132,11 @@ const ChosenAvatar = props => {
                 onMouseLeave={() => setHover(false)}
              />
              <ModalDiv>
+                 <SelectionDiv>
+                 <StyledLabel>{`collect tweets from: `}
+                    <StyledInput type="text" size="15" value={requestQuery} onChange={handleQueryChange} /> 
+                    </StyledLabel>
+                 </SelectionDiv>
                 <TimeCollectionDiv>
                     <StyledLabel>{`run collection for `}
                     <StyledInput type="text" maxlength="2" size="2" value={hours} onChange={handleChange} /> 
