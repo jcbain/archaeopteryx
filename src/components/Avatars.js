@@ -5,8 +5,8 @@ import Avatar from './Avatar';
 
 const GrabberContainer = styled.div`
     /* height: 10vh; */
-    padding: 1%;
     height: 100%;
+    width: 100%;
 `
 
 const Avatars = props => {
@@ -21,7 +21,7 @@ const Avatars = props => {
     })
 
     return (
-        <GrabberContainer>
+        <GrabberContainer className={'avatars'}>
             { collectionButtons }
         </GrabberContainer>
     )

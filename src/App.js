@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from './theme/GlobalStyle';
 import { lightTheme } from './theme/themes';
@@ -8,13 +8,18 @@ import { AvatarProvider } from './components/AvatarContext';
 import Logo from './components/Logo';
 import AvatarContent from './components/AvatarContent';
 
+const Wrapper = styled.div`
+  padding-left: ${({ theme }) => theme.paddingHorizontalMobile};
+  padding-right: ${({ theme }) => theme.paddingHorizontalMobile};
+  padding-top: 5vh;
+`;
 
 function App() {
 
   return (
     <ThemeProvider theme={lightTheme}>
       <AvatarProvider>
-        <div className="App">
+        <Wrapper className="App">
           <Helmet>
             <meta charSet="utf-8" />
             <title>archaeopteryx</title>
@@ -26,7 +31,7 @@ function App() {
           <GlobalStyle />
           <Logo />
           <AvatarContent />
-        </div>
+        </Wrapper>
       </AvatarProvider>
     </ThemeProvider>
   );

@@ -5,8 +5,8 @@ const LogoDiv = styled.div`
     background: ${({theme}) => theme.primaryRed};
     color: ${({theme}) => theme.primaryWhite};
     font-family: 'Fredoka One', cursive;
-    font-size: 2em;
-    width: 100px;
+    font-size: 1em;
+    width: 50px;
     padding: 0.5em;
     border-radius: 4px;
 `;

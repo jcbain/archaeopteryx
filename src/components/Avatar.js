@@ -7,7 +7,7 @@ import { AvatarContext } from './AvatarContext';
 
 
 const AvatarImg = styled.img`
-    height: 33%;
+    width: 100%;
 `
 
 const Avatar = props => {

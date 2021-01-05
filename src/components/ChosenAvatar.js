@@ -9,31 +9,40 @@ import Tweets from './Tweets';
 
 const ContainerDiv = styled.div`
     display: grid;
-    grid-template-rows: 1fr .5fr;
-    grid-template-columns: 0.5fr 1fr;
-    grid-template-areas:
-        "avatar tweet"
-        "avatar button";
+    grid-template-areas: 
+        "avatar modal";
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
     align-items: center;
 `
 
 const AvatarImg = styled.img`
     grid-area: avatar;
-    height: 50%;
-    /* height:  40%; */
+    width: 100%;
 `;
+
+const ModalDiv = styled.div`
+    width: 90%;
+    padding: 5%;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background: ${({ theme }) => theme.primaryBlue};
+
+`
 
 const CollectButton = styled.button`
     grid-area: button;
-    background: ${ props => props.theme.primaryBlue };
+    background: ${ props => props.theme.primaryRed };
     color: ${props => props.theme.primaryWhite};
     font-family: 'Archivo Black', sans-serif;
     border: 0px;
     border-radius: 5px;
-    font-size: 1.5em;
+    font-size: 1em;
     padding: 10px;
     outline: none;
-    width: 50%;
+    width: 100%;
     height: 50px;
 `
 
@@ -41,20 +50,35 @@ const TimeCollectionDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     font-family: 'Fredoka One', cursive;
-    color: ${({ theme }) => theme.primaryBlue};
-    font-size: 1.5em;
+    color: ${({ theme }) => theme.primaryTan};
+    font-size: 1em;
 `
 
 const StyledPlus = styled(Plus)`
   color: ${({ theme }) => theme.primaryRed};
-  width: 50px;
+  width: 25px;
 `
 
 const StyledMinus = styled(Minus)`
   color: ${({ theme }) => theme.primaryRed};
-  width: 50px;
+  width: 25px;
+`
+
+const StyledLabel = styled.label`
+    font-family: 'Fredoka One', cursive;
+`
+
+const StyledInput = styled.input`
+    color: ${({ theme }) => theme.primaryLightBlue};
+    background: none;
+    border: none;
+    font-family: 'Fredoka One', cursive;
+
+`
+
+const SpecialStuff = styled.div`
 `
 
 
@@ -81,6 +105,11 @@ const ChosenAvatar = props => {
         }
     }
 
+    const handleChange = e => {
+        setHours(e.target.value)
+        e.preventDefault();
+    }
+
     const runCollection = e => {
         e.preventDefault();
         axios.post(`/${id}`, {hours: hours, query: query})
@@ -93,14 +122,20 @@ const ChosenAvatar = props => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
              />
-             <TimeCollectionDiv>
-                 <p>{`run collection for ${hours} ${hours > 1 ? 'hours' : 'hour'}`}</p>
-                 {/* <Plus /> */}
-                 <StyledPlus onClick={incrementHours}/>
-                 <StyledMinus onClick={decrementHours}/>
-             </TimeCollectionDiv>
-             {/* { recentTweets.length > 0 && <Tweets data={recentTweets} selectedTweetIndex={tweetIndex} next={next} previous={previous}/> } */}
-             <CollectButton onClick={runCollection}>get those tweets</CollectButton>
+             <ModalDiv>
+                <TimeCollectionDiv>
+                    <StyledLabel>{`run collection for `}
+                    <StyledInput type="text" maxlength="2" size="2" value={hours} onChange={handleChange} /> 
+                    {`${hours > 1 ? 'hours' : 'hour'}`}
+                    </StyledLabel>
+                    <StyledMinus onClick={decrementHours}/>
+                    <StyledPlus onClick={incrementHours}/>
+                </TimeCollectionDiv>
+                {/* { recentTweets.length > 0 && <Tweets data={recentTweets} selectedTweetIndex={tweetIndex} next={next} previous={previous}/> } */}
+                <CollectButton onClick={runCollection}>get those tweets</CollectButton>
+
+             </ModalDiv>
+     
 
         </ContainerDiv>
     )

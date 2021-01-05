@@ -7,7 +7,7 @@ import { AvatarContext } from './AvatarContext';
 
 const ContentDiv = styled.div`
     display: grid;
-    grid-template-columns: 10vw 90vw;
+    grid-template-columns: .25fr 1fr;
     grid-template-rows: 80vh;
     margin-top: 10vh;
 `;
