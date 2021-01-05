@@ -25,7 +25,7 @@ const Avatar = props => {
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 onClick={() => chooseAvatar(identifier)}
-                />
+            />
         </>
     )
 

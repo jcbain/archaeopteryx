@@ -69,53 +69,23 @@ const ChosenAvatar = props => {
     const [ tweetLength, setTweetLength ] = useState(0)
     const [ hours, setHours ] = useState(1);
 
-    const IncrementHours = () => {
+    const incrementHours = () => {
         if ( hours < 73 ) {
             setHours(prev => prev + 1);
         }
     }
 
-    const DecrementHours = () => {
+    const decrementHours = () => {
         if ( hours >= 1 ) {
             setHours(prev => prev - 1);
         }
     }
 
-    // const handleClick = e => {
-    //     e.preventDefault();
-    //     axios.post(`/${id}`, {query: query, jobId: id})
-    //         .then(resp => console.log(resp))
-    //         .catch(err => console.log(err))
-    // }
-
-    // useEffect(() => {
-    //     axios.get(`/${id}`)
-    //         .then(resp => {
-    //             setRecentTweets(resp.data)
-    //             setTweetLength(resp.data.length)
-    //         })
-    //         .catch(err => console.log(err))
-    // }, [id])
-
-    // const next = () => {
-    //     setTweetIndex(prev => {
-    //         if (prev < tweetLength) {
-    //             return prev + 1;
-    //         } else {
-    //             return 0
-    //         }
-    //     })
-    // }
-
-    // const previous = () => {
-    //     setTweetIndex(prev => {
-    //         if(prev < 0){
-    //             return prev - 1;
-    //         } else {
-    //             return tweetLength - 1;
-    //         }
-    //     })
-    // }
+    const runCollection = e => {
+        e.preventDefault();
+        axios.post(`/${id}`, {hours: hours, query: query})
+            .then(resp => 'sent')
+    }
 
     return (
         <ContainerDiv>
@@ -126,11 +96,11 @@ const ChosenAvatar = props => {
              <TimeCollectionDiv>
                  <p>{`run collection for ${hours} ${hours > 1 ? 'hours' : 'hour'}`}</p>
                  {/* <Plus /> */}
-                 <StyledPlus onClick={IncrementHours}/>
-                 <StyledMinus onClick={DecrementHours}/>
+                 <StyledPlus onClick={incrementHours}/>
+                 <StyledMinus onClick={decrementHours}/>
              </TimeCollectionDiv>
              {/* { recentTweets.length > 0 && <Tweets data={recentTweets} selectedTweetIndex={tweetIndex} next={next} previous={previous}/> } */}
-             {/* <CollectButton onClick={handleClick}>get those tweets</CollectButton> */}
+             <CollectButton onClick={runCollection}>get those tweets</CollectButton>
 
         </ContainerDiv>
     )
